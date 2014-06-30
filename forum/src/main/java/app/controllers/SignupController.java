@@ -2,6 +2,7 @@ package app.controllers;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
@@ -12,6 +13,7 @@ import java.util.Set;
 
 import com.google.common.collect.ImmutableMap;
 
+import app.components.FormHelper;
 import app.components.SignupForm;
 
 @Path("/signup")
@@ -28,23 +30,23 @@ public class SignupController extends AppController {
         return view(
                 "signup/entry",
                 ImmutableMap.<String, Object> of(
-                        "form", SignupForm.defaultForm()));
+                        "form",
+                        new FormHelper<SignupForm>(SignupForm.defaultForm())));
     }
 
     @POST
     @Path("entry")
+    @Consumes("application/x-www-form-urlencoded")
     public Response confirm(@Context UriInfo uinfo,
-            @FormParam("email") String email) {
-
-        SignupForm form = SignupForm.emptyForm();
-        form.setEmail(email);
-
-        Set<ConstraintViolation<SignupForm>> results = validator.validate(form);
-        if (!results.isEmpty()) {
+            MultivaluedMap<String, String> formParams) {
+        SignupForm form = SignupForm.bindFrom(formParams);
+        Set<ConstraintViolation<SignupForm>> errors = validator.validate(form);
+        if (!errors.isEmpty()) {
             return view(
                     "signup/entry",
                     ImmutableMap.<String, Object> of(
-                            "form", form));
+                            "form",
+                            new FormHelper<SignupForm>(form, errors)));
         }
 
         return redirect("/signup/verify", uinfo);
