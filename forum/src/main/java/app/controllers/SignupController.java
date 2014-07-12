@@ -13,11 +13,12 @@ import java.util.Set;
 
 import com.google.common.collect.ImmutableMap;
 
-import app.components.FormHelper;
-import app.components.SignupForm;
+import app.views.AppView;
+import app.core.FormHelper;
+import app.models.SignupForm;
 
 @Path("/signup")
-public class SignupController extends AppController {
+public class SignupController {
     private final Validator validator;
 
     public SignupController(Validator validator) {
@@ -27,11 +28,12 @@ public class SignupController extends AppController {
     @GET
     @Path("entry")
     public Response entry() {
-        return view(
+        AppView view = new AppView(
                 "signup/entry",
                 ImmutableMap.<String, Object> of(
                         "form",
                         new FormHelper<SignupForm>(SignupForm.defaultForm())));
+        return Response.ok(view).build();
     }
 
     @POST
@@ -42,19 +44,23 @@ public class SignupController extends AppController {
         SignupForm form = SignupForm.bindFrom(formParams);
         Set<ConstraintViolation<SignupForm>> errors = validator.validate(form);
         if (!errors.isEmpty()) {
-            return view(
+            AppView view = new AppView(
                     "signup/entry",
                     ImmutableMap.<String, Object> of(
                             "form",
                             new FormHelper<SignupForm>(form, errors)));
+
+            return Response.ok(view).build();
         }
 
-        return redirect("/signup/verify", uinfo);
+        return Response.seeOther(
+                uinfo.getBaseUriBuilder().path("/signup/verify").build())
+                .build();
     }
 
     @GET
     @Path("verify")
     public Response verify() {
-        return view("todo");
+        return Response.ok(new AppView("todo")).build();
     }
 }

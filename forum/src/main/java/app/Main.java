@@ -3,6 +3,7 @@ package app;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import io.dropwizard.views.ViewBundle;
 
 import javax.validation.Validation;
 import javax.validation.Validator;
@@ -21,6 +22,7 @@ public class Main extends Application<AppConfiguration> {
 
     @Override
     public void initialize(Bootstrap<AppConfiguration> bootstrap) {
+        bootstrap.addBundle(new ViewBundle());
     }
 
     @Override

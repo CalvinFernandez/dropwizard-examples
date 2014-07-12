@@ -7,8 +7,10 @@ import com.google.common.collect.ImmutableMap;
 
 import java.util.Map;
 
+import app.views.AppView;
+
 @Path("/")
-public class PagesController extends AppController {
+public class PagesController {
     private final Map<String, Object> params;
 
     public PagesController() {
@@ -31,12 +33,12 @@ public class PagesController extends AppController {
     @GET
     @Path("index.html")
     public Response index() {
-        return view("pages/index");
+        return page("index");
     }
 
     @GET
     @Path("pages/{name}.html")
     public Response page(@PathParam("name") String name) {
-        return view("pages/" + name, params);
+        return Response.ok(new AppView("pages/" + name, params)).build();
     }
 }

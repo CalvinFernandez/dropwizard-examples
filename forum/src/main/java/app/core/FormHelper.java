@@ -1,4 +1,4 @@
-package app.components;
+package app.core;
 
 import java.util.Set;
 import java.lang.reflect.InvocationTargetException;
