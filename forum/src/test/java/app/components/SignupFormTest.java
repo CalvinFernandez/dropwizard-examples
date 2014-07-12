@@ -31,6 +31,8 @@ public class SignupFormTest {
         Set<ConstraintViolation<SignupForm>> results;
 
         form.setEmail("");
+        form.setPassword("1234");
+        form.setRetypedPassword("1234");
         results = validator.validate(form);
         assertEquals(1, results.size());
         assertEquals(ImmutableSet.of("may not be empty"),
