@@ -2,11 +2,11 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.tachesimazzoca</groupId>
-  <artifactId>dropwizard-forum</artifactId>
+  <artifactId>dropwizard-examples-forum</artifactId>
   <packaging>jar</packaging>
   <version>0.1.0-SNAPSHOT</version>
   <name>Dropwizard Examples | Forum</name>
-  <url>http://github.com/tachesimazzoca/dropwizard-examples/forum/</url>
+  <url>http://github.com/tachesimazzoca/dropwizard-examples/</url>
   <properties>
     <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
     <maven.compiler.target>1.6</maven.compiler.target>
