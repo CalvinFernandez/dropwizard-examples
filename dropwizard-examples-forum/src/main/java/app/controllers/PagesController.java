@@ -3,9 +3,9 @@ package app.controllers;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 
-import com.google.common.collect.ImmutableMap;
-
 import java.util.Map;
+
+import com.google.common.collect.ImmutableMap;
 
 import app.views.AppView;
 
@@ -18,11 +18,7 @@ public class PagesController {
     }
 
     public PagesController(Map<String, Object> params) {
-        ImmutableMap.Builder<String, Object> builder = ImmutableMap.builder();
-        for (Map.Entry<String, Object> param : params.entrySet()) {
-            builder.put(param.getKey(), param.getValue());
-        }
-        this.params = builder.build();
+        this.params = params;
     }
 
     @GET

@@ -7,6 +7,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
 import javax.validation.Validator;
 
 import java.util.Set;
@@ -21,8 +22,9 @@ import app.models.SignupForm;
 public class SignupController {
     private final Validator validator;
 
-    public SignupController(Validator validator) {
-        this.validator = validator;
+    public SignupController() {
+        this.validator =
+                Validation.buildDefaultValidatorFactory().getValidator();
     }
 
     @GET
